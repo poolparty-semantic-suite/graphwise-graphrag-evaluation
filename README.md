@@ -1,14 +1,13 @@
 # GraphRAG Evaluation JAR
 
-A self-contained fat JAR (`graphrag-evaluation-tool-1.0.0.jar`) that evaluates GraphRAG
-answer quality using LLM-as-judge (RAGAS metrics).
+A self-contained fat JAR (graphrag-evaluation-tool-1.0.0.jar) to evaluate GraphRAG answer quality using LLM-as-judge (RAGAS metrics).
 
 **Two operating modes:**
 
-| Mode                | How to activate | What it does                                                                                        |
-|---------------------|----------------|-----------------------------------------------------------------------------------------------------|
-| **Evaluation mode** | Pass `--questions <csv>` (default) | Loads CSV with question and answers pairs and runs GraphRAG for each of them                        |
-| **Report mode**     | Pass `--report` | Generates HTML comparison reports from existing JSON test logs (generated from the evaluation mode) |
+| Mode                | How to activate                    | What it does                                                                                        |
+|---------------------|------------------------------------|-----------------------------------------------------------------------------------------------------|
+| **Evaluation mode** | Pass `--questions <csv>` (default) | Loads a CSV with question and answers pairs and runs GraphRAG on each of them.                      |
+| **Report mode**     | Pass `--report`                    | Generates HTML comparison reports from existing JSON test logs (generated from the evaluation mode) |
 
 ---
 
@@ -19,48 +18,48 @@ Java 21 should be installed.
 
 ## LLM Provider Configuration
 
-Supported providers are OpenAI, AWS Bedrock, Azure OpenAI and Gemini
+Supported providers are: OpenAI, AWS Bedrock, Azure OpenAI and Google Gemini.
 
 All LLM provider settings are environment variables set **before** the `java` command that runs the jar.
 Activate a provider profile with `SPRING_PROFILES_ACTIVE`.
 
-### Base variables — required for all providers
+### Base variables – required for all providers
 
-| Variable        | Description                                                                                                                   |
-|-----------------|-------------------------------------------------------------------------------------------------------------------------------|
-| `N8N_API_KEY`   | N8N API key, needed for extracting n8n execution data. It can be generated in graphrag-workflows UI under Settings -> n8n API |
-| `AI_BASE_URL`   | Base URL of the LLM API endpoint                                                                                              |
-| `AI_API_KEY`    | LLM provider API key for authentication                                                                                       |
-| `AI_CHAT_MODEL` | Chat model identifier, e.g. `gpt-4o-mini`                                                                                     |
-| `AI_EMBED_MODEL` | Embedding model identifier, e.g. `text-embedding-3-small`                                                                     |
+| Variable         | Description                                                                                                                     |
+|------------------|---------------------------------------------------------------------------------------------------------------------------------|
+| `N8N_API_KEY`    | N8n API key required for extracting n8n execution data. It can be generated in graphrag-workflows UI under Settings -> n8n API. |
+| `AI_BASE_URL`    | Base URL of the LLM API endpoint                                                                                                |
+| `AI_API_KEY`     | LLM provider API key for authentication                                                                                         |
+| `AI_CHAT_MODEL`  | Chat model identifier, e.g. `gpt-4o-mini`                                                                                       |
+| `AI_EMBED_MODEL` | Embedding model identifier, e.g. `text-embedding-3-small`                                                                       |
 
 ### Provider-specific variables
 
 **OpenAI** - activate with `SPRING_PROFILES_ACTIVE=openai` or by omitting to set `SPRING_PROFILES_ACTIVE`
 
-No additional variables are needed.
+No additional variables are required.
 
-**Azure OpenAI / Foundry** — activate with `SPRING_PROFILES_ACTIVE=azure`
+**Azure OpenAI / Foundry** – activate with `SPRING_PROFILES_ACTIVE=azure`
 
-| Variable | Description |
-|----------|-------------|
-| `AZURE_OPENAI_DEPLOYMENT_NAME` | Azure deployment name for chat |
-| `AZURE_EMBED_DEPLOYMENT_NAME` | Azure deployment name for embeddings |
+| Variable                       | Description                          |
+|--------------------------------|--------------------------------------|
+| `AZURE_OPENAI_DEPLOYMENT_NAME` | Azure deployment name for chat       |
+| `AZURE_EMBED_DEPLOYMENT_NAME`  | Azure deployment name for embeddings |
 
-**AWS Bedrock** — activate with `SPRING_PROFILES_ACTIVE=bedrock`
+**AWS Bedrock** – activate with `SPRING_PROFILES_ACTIVE=bedrock`
 
-| Variable | Description |
-|----------|-------------|
-| `BEDROCK_REGION` | AWS region, e.g. `us-east-1` |
-| `AWS_ACCESS_KEY_ID` | AWS access key |
-| `AWS_SECRET_ACCESS_KEY` | AWS secret key |
+| Variable                | Description                  |
+|-------------------------|------------------------------|
+| `BEDROCK_REGION`        | AWS region, e.g. `us-east-1` |
+| `AWS_ACCESS_KEY_ID`     | AWS access key               |
+| `AWS_SECRET_ACCESS_KEY` | AWS secret key               |
 
-**Google Gemini** — activate with `SPRING_PROFILES_ACTIVE=gemini`
+**Google Gemini** – activate with `SPRING_PROFILES_ACTIVE=gemini`
 
-| Variable | Description |
-|----------|-------------|
-| `GCP_PROJECT_ID` | GCP project ID |
-| `GCP_LOCATION` | GCP location, e.g. `us-central1` |
+| Variable         | Description                      |
+|------------------|----------------------------------|
+| `GCP_PROJECT_ID` | GCP project ID                   |
+| `GCP_LOCATION`   | GCP location, e.g. `us-central1` |
 
 ---
 
@@ -88,33 +87,33 @@ java -jar graphrag-evaluation-tool-1.0.0.jar \
   --auth-user bob --auth-password bob123
 ```
 
-> All LLM provider settings are environment variables — not CLI arguments.
+> All LLM provider settings are environment variables and not CLI arguments.
 
-### CLI arguments
+### CLI Arguments
 
-| Argument | Default                                                                                      | Description                                                                |
-|----------|----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------|
-| `--questions <path>` | *(required)*                                                                                 | CSV file with questions and expected answers                               |
-| `--graphrag-url <url>` | `http://localhost:80`                                                                        | GraphRAG chat API base URL                                                 |
-| `--auth-user <user>` | `bob`                                                                                        | Keycloak username                                                          |
-| `--auth-password <pass>` | `bob123`                                                                                     | Keycloak password                                                          |
-| `--output-dir <path>` | `./graphrag-eval-output-{datetime}` for evaluation mode, and `report` folder for report mode | Directory for all output |
-| `--version <string>` | `1.0.0`                                                                                      | Version label in output filenames                                          |
-| `--help` | —                                                                                            | Show full help                                                             |
+| Argument                 | Default                                                                                      | Description                                    |
+|--------------------------|----------------------------------------------------------------------------------------------|------------------------------------------------|
+| `--questions <path>`     | *(required)*                                                                                 | A CSV file with questions and expected answers |
+| `--graphrag-url <url>`   | `http://localhost:80`                                                                        | GraphRAG chat API base URL                     |
+| `--auth-user <user>`     | `bob`                                                                                        | User name set in Keycloak                      |
+| `--auth-password <pass>` | `bob123`                                                                                     | Keycloak password                              |
+| `--output-dir <path>`    | `./graphrag-eval-output-{datetime}` for evaluation mode, and `report` folder for report mode | Output directory                               |
+| `--version <string>`     | `1.0.0`                                                                                      | Version label in output file names             |
+| `--help`                 | –                                                                                            | Show full help                                 |
 
-### CSV format
+### CSV Format
 
 ```csv
 question,expected_answer,category
 ```
 
-| Column | Required | Default | Notes |
-|--------|----------|---------|-------|
-| `question` | **Yes** | — | The question to send to GraphRAG |
-| `expected_answer` | **Yes** | — | Golden answer for LLM Judge comparison |
-| `category` | No | `general` | Pipeline: `general`, `vector`, `graphdb`, `graphdb+vector`, `multihop`, `comparison`, `unknown` |
+| Column            | Required | Default   | Notes                                                                                           |
+|-------------------|----------|-----------|-------------------------------------------------------------------------------------------------|
+| `question`        | **Yes**  | –         | The question to be sent to GraphRAG                                                             |
+| `expected_answer` | **Yes**  | –         | The golden answer for LLM Judge comparison                                                      |
+| `category`        | No       | `general` | Pipeline: `general`, `vector`, `graphdb`, `graphdb+vector`, `multihop`, `comparison`, `unknown` |
 
-Fields with commas or newlines must be RFC 4180-quoted:
+Fields with commas or new lines must use RFC 4180 quotes:
 
 ```csv
 question,expected_answer
@@ -122,7 +121,7 @@ question,expected_answer
 She reigned for 47 years."
 ```
 
-### Evaluation output
+### Evaluation Output
 
 ```
 output-dir/                 
@@ -164,7 +163,7 @@ java -jar graphrag-evaluation-tool-1.0.0.jar \
 ## Report Mode
 
 Generates HTML comparison reports from existing JSON test logs.
-No GraphRAG or LLM services needed — only the JSON log files.
+No GraphRAG or LLM services needed – only the JSON log files.
 
 ```bash
 # Compare two folders
@@ -186,25 +185,25 @@ java -jar graphrag-evaluation-tool-1.0.0.jar \
 
 The output directory defaults to `./report/` when not specified.
 
-### Report pages
+### Report Pages
 
-| File | Contents |
-|------|----------|
-| `index.html` | Summary stats + navigation |
-| `comparison-report.html` | Per-query score/precision/recall/F1 deltas. Expand rows to see expected answer, system answer, fact counts, and full claim lists |
-| `claim-analysis.html` | Per-query R/G fact counters, question-relevant vs extra facts |
-| `baseline-averages.html` | Per-query mean scores — baseline runs only |
-| `current-averages.html` | Per-query mean scores — current runs only |
-| `baseline-anomalies.html` | Score/precision/recall/F1 variance anomalies |
-| `current-anomalies.html` | Score variance across repeated current runs |
-| `inter-run-variance.html` | Variance across run folders (multi-run detection) |
-| `baseline-tokens-anomalies.html` | Token/exec-time outliers — baseline runs |
-| `current-tokens-anomalies.html` | Token/exec-time outliers — current runs |
-| `token-comparison.html` | Baseline-vs-current token usage comparison |
+| File                             | Contents                                                                                                                               |
+|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------|
+| `index.html`                     | Summary stats + navigation                                                                                                             |
+| `comparison-report.html`         | Per-query score/precision/recall/F1 deltas. Expand rows to see the expected answer, system answer, fact counts, and a full claim lists |
+| `claim-analysis.html`            | Per-query R/G fact counters, question-relevant vs extra facts                                                                          |
+| `baseline-averages.html`         | Per-query mean scores – baseline runs only                                                                                             |
+| `current-averages.html`          | Per-query mean scores – current runs only                                                                                              |
+| `baseline-anomalies.html`        | Score/precision/recall/F1 variance anomalies                                                                                           |
+| `current-anomalies.html`         | Score variance across repeated current runs                                                                                            |
+| `inter-run-variance.html`        | Variance across run folders (multi-run detection)                                                                                      |
+| `baseline-tokens-anomalies.html` | Token/exec-time outliers – baseline runs                                                                                               |
+| `current-tokens-anomalies.html`  | Token/exec-time outliers – current runs                                                                                                |
+| `token-comparison.html`          | Baseline-vs-current token usage comparison                                                                                             |
 
-### Multi-run detection
+### Multi-Run Detection
 
-When a folder contains multiple run subdirectories, the reporter aggregates per query
+When a folder contains multiple run subdirectories, the reporter aggregates results per query
 (mean ± σ). Expanded detail rows show **all** per-run records side-by-side,
 each attributed to its source folder.
 
@@ -213,17 +212,17 @@ each attributed to its source folder.
 
 ## Evaluation Metrics
 
-Six RAGAS metrics are computed in parallel for each evaluated scenario.
+Six RAGAS metrics are computed for each evaluated scenario in parallel.
 The primary gate is **Factual Correctness (F1)**.
 
-| Metric | Description                                                                                                                                                          |
-|--------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Factual Correctness (F1)** | Claim-level precision/recall and f1. Decomposes both answers into atomic claims, classifies each as entailed / neutral / contradicted. Default threshold: f1 >= 0.65 |
-| **Answer Correctness** | Weighted average of  Factual correctness (75%) + Semantic similarity (25%)                                                                                           |
-| **Context Precision** | Retrieved chunks are relevant and in the right order                                                                                                                 |
-| **Context Recall** | All facts needed to answer were retrieved                                                                                                                            |
-| **Faithfulness** | Answer stays within retrieved context (no hallucination)                                                                                                             |
-| **Response Relevancy** | Answer is about what was asked                                                                                                                                       |
+| Metric                       | Description                                                                                                                                                           |
+|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Factual Correctness (F1)** | Claim-level precision/recall and F1.. Decomposes both answers into atomic claims, classifies each as entailed / neutral / contradicted. Default threshold: f1 >= 0.65 |
+| **Answer Correctness**       | Weighted average of Factual Correctness (75%) + Semantic Similarity (25%)                                                                                             |
+| **Context Precision**        | Retrieved chunks are relevant and in the right order                                                                                                                  |
+| **Context Recall**           | All facts needed for the answer were retrieved                                                                                                                        |
+| **Faithfulness**             | Answer remains within retrieved context (no hallucination)                                                                                                            |
+| **Response Relevancy**       | Answer is relevant for what was asked                                                                                                                                 |
 
 
 ---
