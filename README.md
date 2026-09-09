@@ -98,7 +98,6 @@ java -jar graphrag-evaluation-tool-1.0.0.jar \
 | `--auth-user <user>`     | `bob`                                                                                        | User name set in Keycloak                      |
 | `--auth-password <pass>` | `bob123`                                                                                     | Keycloak password                              |
 | `--output-dir <path>`    | `./graphrag-eval-output-{datetime}` for evaluation mode, and `report` folder for report mode | Output directory                               |
-| `--version <string>`     | `1.0.0`                                                                                      | Version label in output file names             |
 | `--help`                 | –                                                                                            | Show full help                                 |
 
 ### CSV Format
