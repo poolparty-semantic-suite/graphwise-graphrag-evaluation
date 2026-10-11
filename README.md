@@ -18,7 +18,7 @@ Java 21 should be installed.
 
 ## LLM Provider Configuration
 
-Supported providers are: OpenAI, AWS Bedrock, Azure OpenAI and Google Gemini.
+Supported providers are: OpenAI, AWS Bedrock, Azure OpenAI and Google GenAI.
 
 All LLM provider settings are environment variables set **before** the `java` command that runs the jar.
 Activate a provider profile with `SPRING_PROFILES_ACTIVE`.
